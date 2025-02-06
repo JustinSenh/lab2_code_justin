@@ -44,7 +44,7 @@ class find_object_Node(Node):
         mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, None)
 
         contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
+        published = False
         if contours:
             # Filter out small contours based on area
             min_area = 100
@@ -67,9 +67,15 @@ class find_object_Node(Node):
                 print(cx,cy)
                 point = Point(x=float(cx), y=float(cy), z=0.0)  # Create a Point message
                 self.publisher_find_object.publish(point)  # Publish the Point
+                published = True
                 h,w = mask.shape
                 #print("Height:", h)
                 #print("Width", w)
+
+        if published == False:
+            point = Point(x=160.0, y=0.0, z=0.0)
+            self.publisher_find_object.publish(point)
+            
 
 def main(args=None):
     rclpy.init(args=args)
