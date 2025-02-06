@@ -28,11 +28,11 @@ class rotate_robot_Node(Node):
         #write an if statement to compare x coordinate to screen center
         if x_coordinate < 110:
             #rotate robot counterclockwise 1
-            vel.angular.z = 1.0
+            vel.angular.z = 0.8
             self.publisher_rotate_robot.publish(vel)
         elif x_coordinate > 210:
             #rotate robot clockwise -1
-            vel.angular.z = -1.0
+            vel.angular.z = -0.8
             self.publisher_rotate_robot.publish(vel)
         else:
             #don't rotate the robot
